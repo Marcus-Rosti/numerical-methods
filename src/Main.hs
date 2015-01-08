@@ -1,6 +1,7 @@
 --import Ch_02
 --import Ch_03
 import Ch_06
+import Ch_07
 
 e :: Double
 e = exp 1
@@ -22,3 +23,4 @@ main = do
 	print $ real - simps <= err*10
 	print $ real - trap <= err*10
 	print $ antiF b_0 - antiF a_0
+	print $ snd $ last $eulers (\t y -> t + y) 2 1 1.1 0.05

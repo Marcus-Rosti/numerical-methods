@@ -1,4 +1,4 @@
-module Ch_03 (Matrix, gauss, transpose, symmetric) where
+module Ch_03 (Matrix, gauss, transpose, symmetric, mapMatrix) where
 
 -- Found this. Looks like good boilerplate!
 type Number = Double 

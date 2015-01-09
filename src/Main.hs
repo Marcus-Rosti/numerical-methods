@@ -23,5 +23,5 @@ main = do
 	print $ real - simps <= err*10
 	print $ real - trap <= err*10
 	print $ antiF b_0 - antiF a_0
-	print $ eulers (\t y -> t + y) 2 1 1.5 0.1
-	print $ taylors (\t y -> t + y) 2 1 1.5 0.1
+	print $ eulers (\t y -> t + y) 2 1 1.6 0.1
+	print $ taylors (\t y -> t + y) 2 1 1.6 0.1

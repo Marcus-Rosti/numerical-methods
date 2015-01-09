@@ -18,5 +18,7 @@ eulersUnitTests = testGroup "Euler's Method Unit Tests"
 	testCase "no steps returns params" $
 		(eulers (\t y -> t + y) 2 1 1 0.05) `compare` [(1.0,2.0)] @?= EQ,
 	testCase "A negative second param returns []" $
-		(eulers (\t y -> t + y) 2 1 (-1) 0.05) `compare` [] @?= EQ
+		(eulers (\t y -> t + y) 2 1 (-1) 0.05) `compare` [] @?= EQ,
+	testCase "Truncation error" $
+		(length $ (eulers (\t y -> t + y) 2 1 (1.5) 0.1)) `compare` 6 @?= EQ
 	]

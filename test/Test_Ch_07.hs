@@ -38,7 +38,7 @@ taylorsUnitTests = testGroup "Taylors's Method Unit Tests"
 rkUnitTests = testGroup "Runge-Kutta 4's Method Unit Tests" 
 	[ 
 	testCase "y'(t) = t+y // y(1) = 2 does it work at all?" $
-		((snd.last)(rungeKutta4 (\t y -> t + y) 2 1 1.5 0.1)) `compare` 3.5673 + .0001 @?= LT,
+		abs (((snd.last)(rungeKutta4 (\t y -> t + y) 2 1 1.5 0.1)) - 3.5636) `compare` 0.0001  @?= LT,
 	testCase "no steps returns params" $
 		(rungeKutta4 (\t y -> t + y) 2 1 1 0.05) @?= [(1.0,2.0)],
 	testCase "A negative second param returns []" $

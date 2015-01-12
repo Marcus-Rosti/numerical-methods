@@ -2,7 +2,8 @@
 -- documentation, see http://haskell.org/cabal/users-guide/
 
 name:                numerical-methods
-version:             0.1.1.9
+-- release / year / month / day (of build)
+version:             0.14.1.12      
 synopsis:            Developing the numerical methods from Classical and Mordern Numerical Analysis 
 description:         
   I'm just really playing around with haskell and cabal.

@@ -30,14 +30,14 @@ rungeKuttaFehlberg :: (Double -> Double -> Double) -> Double -> Double -> Double
 rungeKuttaFehlberg yprime y_0 t_0 t_n h tolerance
 	| t_0 == t_n = [(t_0, y_0)]
 	| t_0 > (t_n) = []
-	| local_error < tolerance = (t_0, y_0) : rungeKuttaFehlberg yprime y_kp1 (t_0+h) t_n h tolerance
+	| local_error <= tolerance = (t_0, y_0) : rungeKuttaFehlberg yprime y_kp1 (t_0+h) t_n h tolerance
 	| h >= 1 = rungeKuttaFehlberg yprime y_0 t_0 t_n 1 tolerance
 	| q <= 0.1 = rungeKuttaFehlberg yprime y_0 t_0 t_n (h/10) tolerance
 	| q <= 4 = rungeKuttaFehlberg yprime y_0 t_0 t_n (q*h) tolerance
 	| q > 4 = rungeKuttaFehlberg yprime y_0 t_0 t_n (4*h) tolerance
  	| otherwise = []
 		where 
-			local_error = abs (y_kp1 - y_kp1_TEST)
+			local_error = (abs (y_kp1 - y_kp1_TEST)) / h
 			q =  ((0.5 * tolerance * h) / local_error) ** (1/4)
 			k1 = yprime t_0 y_0 
 			k2 = yprime (t_0 + h/4) (y_0 + h/4*k1)

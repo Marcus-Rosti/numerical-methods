@@ -40,12 +40,12 @@ main = do
 	print $ strip4y (eulers (\t y -> t + y) 2 1 1.5 0.1)
 	print $ strip4y (taylors (\t y -> t + y) 2 1 1.5 0.1)
 	print $ strip4y (rungeKuttaFehlberg (\t y -> t + y) 2 1 1.5 0.1 0.001)
-	let rkfSols = rungeKuttaFehlberg ode 2 1 2 0.05 err
-	-- print $ "RKF solutions"
-	-- print $ strip4y rkfSols
+	let rkfSols = rungeKuttaFehlberg ode 2 1 1.5 0.1 err
+	print $ "RKF solutions"
+	print $ rkfSols
 	let ts = strip4t rkfSols
 	let sols = map odeSol ts
 	print $ "errors"
 	let errors = list_error sols (strip4y rkfSols)
-	print $ errors
+	--print $ errors
 	print $ foldr1 (+) errors

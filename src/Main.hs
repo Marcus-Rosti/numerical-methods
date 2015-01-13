@@ -7,10 +7,10 @@ e :: Double
 e = exp 1
 
 ode :: Double ->Double -> Double
-ode t y = t+y
+ode t y = e**t+y
 
 odeSol :: Double -> Double
-odeSol t = 4*e**(t - 1) - t - 1
+odeSol t = e**(t-1)*(e*(t-1) + 2)
  
 strip4y :: [(Double, Double)] -> [Double]
 strip4y = map (\(_,y) -> y)
@@ -20,6 +20,11 @@ strip4t = map (\(t,_) -> t)
 
 list_error :: [Double] -> [Double] -> [Double]
 list_error xs ys = map (\(x,y) -> x - y) (zip xs ys)
+
+inferH :: [Double] -> [Double]
+inferH [] = []
+inferH (f:s:xs) = (s-f) : inferH (s:xs)
+inferH (_:[]) = []
 
 main :: IO ()
 main = do
@@ -40,10 +45,11 @@ main = do
 	print $ strip4y (eulers (\t y -> t + y) 2 1 1.5 0.1)
 	print $ strip4y (taylors (\t y -> t + y) 2 1 1.5 0.1)
 	print $ strip4y (rungeKuttaFehlberg (\t y -> t + y) 2 1 1.5 0.1 0.001)
-	let rkfSols = rungeKuttaFehlberg ode 2 1 1.5 0.1 err
+	let rkfSols = rungeKuttaFehlberg ode 2 1 1.5 (2**(2)) err
 	print $ "RKF solutions"
 	print $ rkfSols
 	let ts = strip4t rkfSols
+	print $ inferH ts
 	let sols = map odeSol ts
 	print $ "errors"
 	let errors = list_error sols (strip4y rkfSols)

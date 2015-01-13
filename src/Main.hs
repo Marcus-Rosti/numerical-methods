@@ -6,6 +6,21 @@ import Ch_07
 e :: Double
 e = exp 1
 
+ode :: Double ->Double -> Double
+ode t y = t+y
+
+odeSol :: Double -> Double
+odeSol t = 4*e**(t - 1) - t - 1
+ 
+strip4y :: [(Double, Double)] -> [Double]
+strip4y = map (\(_,y) -> y)
+
+strip4t :: [(Double, Double)] -> [Double]
+strip4t = map (\(t,_) -> t)
+
+list_error :: [Double] -> [Double] -> [Double]
+list_error xs ys = map (\(x,y) -> x - y) (zip xs ys)
+
 main :: IO ()
 main = do
 	let f x = (-2) * x * sin(x**2)
@@ -22,7 +37,15 @@ main = do
 	print $ real - gq <= err*10
 	print $ real - simps <= err*10
 	print $ real - trap <= err*10
-	print $ antiF b_0 - antiF a_0
-	print $ eulers (\t y -> t + y) 2 1 1.1 0.05
-	print $ (taylors (\t y -> t + y) 2 1 1.1 0.05)
-	print $ (taylors (\t y -> t + y) 2 1 1.5 0.1)
+	print $ strip4y (eulers (\t y -> t + y) 2 1 1.5 0.1)
+	print $ strip4y (taylors (\t y -> t + y) 2 1 1.5 0.1)
+	print $ strip4y (rungeKuttaFehlberg (\t y -> t + y) 2 1 1.5 0.1 0.001)
+	let rkfSols = rungeKuttaFehlberg ode 2 1 2 0.05 err
+	-- print $ "RKF solutions"
+	-- print $ strip4y rkfSols
+	let ts = strip4t rkfSols
+	let sols = map odeSol ts
+	print $ "errors"
+	let errors = list_error sols (strip4y rkfSols)
+	print $ errors
+	print $ foldr1 (+) errors

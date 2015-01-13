@@ -3,7 +3,7 @@
 
 name:                numerical-methods
 -- release / year / month / day (of build)
-version:             0.14.1.12      
+version:             0.15.1.13      
 synopsis:            Developing the numerical methods from Classical and Mordern Numerical Analysis 
 description:         
   I'm just really playing around with haskell and cabal.
@@ -23,7 +23,7 @@ cabal-version:       >=1.18
 
 source-repository head
   type:     git
-  location: https://github.com/Marcus-Rosti/numerical_methods
+  location: git@github.com:Marcus-Rosti/numerical_methods.git
 
 
 

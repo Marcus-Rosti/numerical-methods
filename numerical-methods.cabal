@@ -3,7 +3,7 @@
 
 name:                numerical-methods
 -- release / year / month / day (of build)
-version:             0.15.1.13      
+version:             0.15.1.16      
 synopsis:            Developing the numerical methods from Classical and Mordern Numerical Analysis 
 description:         
   I'm just really playing around with haskell and cabal.

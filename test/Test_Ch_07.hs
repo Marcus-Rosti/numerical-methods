@@ -9,7 +9,10 @@ import Ch_07
 
 
 ch_07Suite_Props = testGroup "CH 7 Properties" []
-ch_07Suite_Units = testGroup "Ch 7 Units" [eulersUnitTests,taylorsUnitTests,rkUnitTests]
+ch_07Suite_Units = testGroup "Ch 7 Units" [eulersUnitTests,taylorsUnitTests,rkUnitTests,rkf45UnitTests]
+
+err :: Double
+err = 10**(-4)
 
 eulersUnitTests = testGroup "Euler's Method Unit Tests" 
 	[ 
@@ -45,4 +48,10 @@ rkUnitTests = testGroup "Runge-Kutta 4's Method Unit Tests"
 		(rungeKutta4 (\t y -> t + y) 2 1 (-1) 0.05) @?= [],
 	testCase "Truncation error" $
 		(length $ (rungeKutta4 (\t y -> t + y) 2 1 (1.5) 0.1)) @?= 6
+	]
+
+rkf45UnitTests = testGroup "RKF-45 Unit Tests"
+	[
+	testCase "y'(t) = t+y // y(1) = 2 does it work at all?" $
+		abs (((snd.last)(rungeKuttaFehlberg (\t y -> t + y) 2 1 1.4 0.1 err)) - 3.5673) `compare` err  @?= LT
 	]

@@ -10,7 +10,7 @@ ode :: Double ->Double -> Double
 ode t y = t+y
 
 odeSol :: Double -> Double
-odeSol t = (-t) + e**t -1
+odeSol t = (-t) + 4*e**(t-1) -1
  
 strip4y :: [(Double, Double)] -> [Double]
 strip4y = map (\(_,y) -> y)
@@ -45,7 +45,7 @@ main = do
 	print $ strip4y (eulers (\t y -> t + y) 2 1 1.5 0.1)
 	print $ strip4y (taylors (\t y -> t + y) 2 1 1.5 0.1)
 	print $ strip4y (rungeKuttaFehlberg (\t y -> t + y) 2 1 1.5 0.1 0.001)
-	let rkfSols = rungeKutta4 ode 2 1 1.5 (2**(-8))
+	let rkfSols = rungeKuttaFehlberg ode 2 1 1.5 (2**(-16)) (10**(-4))
 	print $ "RKF solutions"
 	print $ rkfSols
 	let ts = strip4t rkfSols
@@ -53,7 +53,6 @@ main = do
 	let sols = map odeSol ts
 	print $ "errors"
 	let errors = list_error sols (strip4y rkfSols)
-	--print $ errors
 	print $ foldr1 (+) errors
 
-	print $ rungeKuttaFehlberg (\t y -> t + y) 2 1 1.4 0.1 (10**(-3))
+	--print $ rungeKuttaFehlberg (\t y -> t + y) 2 1 1.4 0.1 (10**(-3))

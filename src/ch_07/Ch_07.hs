@@ -31,14 +31,12 @@ rungeKuttaFehlberg yprime y_0 t_0 t_n h tolerance
 	| t_0 == t_n = [(t_0, y_0)]
 	| t_0 > (t_n) = []
 	| h > 1 = rungeKuttaFehlberg yprime y_0 t_0 t_n 1 tolerance
-	| local_error <= tolerance = (t_0, y_0) : rungeKuttaFehlberg yprime y_kp1 (t_0+h) t_n h tolerance
-	| q <= 0.1 = rungeKuttaFehlberg yprime y_0 t_0 t_n (h/10) tolerance
-	| q <= 4 && q > 0.1  = rungeKuttaFehlberg yprime y_0 t_0 t_n (q*h) tolerance
-	| q > 4 = rungeKuttaFehlberg yprime y_0 t_0 t_n (4*h) tolerance
+	| local_error <= tolerance = (t_0, y_0) : rungeKuttaFehlberg yprime y_kp1 (t_0+h) t_n hnext tolerance
+	| local_error > tolerance = rungeKuttaFehlberg yprime y_0 t_0 t_n hnext tolerance
  	| otherwise = []
 		where 
-			local_error = (abs (y_kp1 - y_kp1_TEST)) / h
-			q =  ((0.5 * tolerance * h) / local_error) ** (1/4)
+			local_error = (abs ((y_kp1 - y_kp1_TEST) / h))
+			q =  ((0.1 * tolerance * h) / local_error) ** (1/4)
 			k1 = yprime t_0 y_0 
 			k2 = yprime (t_0 + h/4) (y_0 + h/4*k1)
 			k3 = yprime (t_0 + 3*h/8) (y_0 + h*(3/32*k1 + 9/32*k2))
@@ -48,3 +46,8 @@ rungeKuttaFehlberg yprime y_0 t_0 t_n h tolerance
 
 			y_kp1 = y_0 + h*(25/216*k1 + 1408/2565*k3 + 2197/4104*k4 - 1/5*k5)
 			y_kp1_TEST = y_0 + h*(16/135*k1 + 6656/12825*k3 + 28561/56430*k4 - 9/50*k5 + 2/55*k6)
+
+			hnext 
+				| q <= 0.1 = (h/10)
+				| q <= 4 && q > 0.1  = q*h
+				| q > 4 = 4*h

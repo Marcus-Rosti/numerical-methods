@@ -1,4 +1,4 @@
-module Ch_02 (bisection, newton_raphson, secant, horner) where
+module Ch_02 (bisection, newtonRaphson, secant, horner) where
 
 bisection :: (Double -> Double) -- ^ function
 			-> (Double, Double) -- ^ between what to values (a < b)
@@ -13,16 +13,16 @@ bisection f (a,b) err
 	| otherwise = Nothing
 		where mid = (a+b)/2
 
-newton_raphson :: 	(Double -> Double) 		-- ^ f(x)
+newtonRaphson :: 	(Double -> Double) 		-- ^ f(x)
 					-> (Double -> Double) 	-- ^ f'(x)
 					-> Double 				-- ^ x_0
 					-> Double 				-- ^ error tolerance
 					-> Maybe Double			-- ^ Root
-newton_raphson f fp x err
+newtonRaphson f fp x err
 	| abs (f x) < abs (f xk) = Nothing
 	| f x == 0 = Just x
 	| f xk < err = Just xk
-	| otherwise = newton_raphson f fp xk err
+	| otherwise = newtonRaphson f fp xk err
 		where xk = x - f x / fp x
 
 secant :: 	(Double -> Double) 	-- ^ f(x)

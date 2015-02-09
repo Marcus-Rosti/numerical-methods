@@ -1,7 +1,7 @@
 --import Ch_02
 --import Ch_03
-import Ch_06
-import Ch_07
+import           Ch_06
+import           Ch_07
 
 e :: Double
 e = exp 1
@@ -11,7 +11,7 @@ ode t y = t+y
 
 odeSol :: Double -> Double
 odeSol t = (-t) + 4*e**(t-1) -1
- 
+
 strip4y :: [(Double, Double)] -> [Double]
 strip4y = map (\(_,y) -> y)
 

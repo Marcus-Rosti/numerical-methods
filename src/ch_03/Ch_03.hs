@@ -1,7 +1,7 @@
 module Ch_03 (Matrix, gauss, transpose, symmetric, mapMatrix) where
 
 -- Found this. Looks like good boilerplate!
-type Number = Double 
+type Number = Double
 type Vector = [Number]
 type Row = [Number]
 type Matrix = [Row]
@@ -25,7 +25,7 @@ triangular m  = row:(triangular rows')
 	    f bs
 	        | (head bs) == 0 = drop 1 bs
 	        | otherwise      = drop 1 $ zipWith (-) (map (*c) bs) row
-	        where 
+	        where
 	        	c = (head row)/(head bs)
 
 rotatePivot :: Matrix -> Matrix
@@ -54,5 +54,3 @@ transpose x = (map head x) : transpose (map tail x)
 
 symmetric :: Matrix -> Bool
 symmetric a = a == transpose a
-
-

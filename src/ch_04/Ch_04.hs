@@ -2,7 +2,7 @@
 -- Polynomial Approximation
 --import Data.Matrix
 
-cubicSplineInterp x (xjp2:xjp1:xj:xjm1:xjm2:[]) 
+cubicSplineInterp x (xjp2:xjp1:xj:xjm1:xjm2:[])
 	| x >  xjp2 = 0
 	| x >= xjp1 = (1/(6*h^3)) * (xjp2 -x)^3
 	| x >= xj = 1/6 + (1/(2*h)) *(xjp1-x) + (1/(2*h^2)) *(xjp1-x)^2 - (1/(2*h^3)) *(xjp1-x)^3

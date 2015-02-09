@@ -3,7 +3,7 @@ module Ch_07 (eulers, taylors, rungeKutta4, rungeKuttaFehlberg) where
 eulers :: (Double -> Double -> Double) -> Double -> Double -> Double -> Double -> [(Double, Double)]
 eulers yprime y_0 t_0 t_n h
 	| t_0 == t_n = [(t_0, y_0)]
-	|  t_0 <=(t_n+h) = (t_0, y_0) : eulers yprime (y_0 + h * (yprime t_0 y_0)) (t_0 + h) t_n h
+	| t_0 <= t_n+h = (t_0, y_0) : eulers yprime (y_0 + h * yprime t_0 y_0) (t_0 + h) t_n h
 	| otherwise = []
 
 taylors :: (Double -> Double -> Double) -> Double -> Double -> Double -> Double -> [(Double, Double)]
@@ -29,13 +29,13 @@ rungeKutta4 yprime y_0 t_0 t_n h
 rungeKuttaFehlberg :: (Double -> Double -> Double) -> Double -> Double -> Double -> Double -> Double -> [(Double, Double)]
 rungeKuttaFehlberg yprime y_0 t_0 t_n h tolerance
 	| t_0 == t_n = [(t_0, y_0)]
-	| t_0 > (t_n) = []
+	| t_0 > t_n = []
 	| h > 1 = rungeKuttaFehlberg yprime y_0 t_0 t_n 1 tolerance
 	| local_error <= tolerance = (t_0, y_0) : rungeKuttaFehlberg yprime y_kp1 (t_0+h) t_n hnext tolerance
 	| local_error > tolerance = rungeKuttaFehlberg yprime y_0 t_0 t_n hnext tolerance
- 	| otherwise = []
+	| otherwise = []
 		where
-			local_error = (abs ((y_kp1 - y_kp1_TEST) / h))
+			local_error = abs ((y_kp1 - y_kp1_TEST) / h)
 			q =  ((0.1 * tolerance * h) / local_error) ** (1/4)
 			k1 = yprime t_0 y_0
 			k2 = yprime (t_0 + h/4) (y_0 + h/4*k1)
@@ -48,6 +48,6 @@ rungeKuttaFehlberg yprime y_0 t_0 t_n h tolerance
 			y_kp1_TEST = y_0 + h*(16/135*k1 + 6656/12825*k3 + 28561/56430*k4 - 9/50*k5 + 2/55*k6)
 
 			hnext
-				| q <= 0.1 = (h/10)
+				| q <= 0.1 = h/10
 				| q <= 4 && q > 0.1  = q*h
 				| q > 4 = 4*h

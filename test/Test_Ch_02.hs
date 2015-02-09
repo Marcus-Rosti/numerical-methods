@@ -4,7 +4,7 @@ import Test.Tasty
 import Test.Tasty.SmallCheck as SC
 import Test.Tasty.HUnit
 
-import Ch_02 (bisection, newton_raphson, secant, horner)
+import Ch_02 (bisection, newtonRaphson, secant, horner)
 import Data.Maybe
 
 e :: Double
@@ -44,17 +44,17 @@ bisectionUnits = testGroup "Bisection Unit Tests"
 
 newton_raphson_props = testGroup "Newton-Raphson Propeties - Checked by SmallCheck"
   [ SC.testProperty "e^x + x should converge from anywhere < root + err" $
-      \x -> (fromJust $ newton_raphson f fp (x :: Double) err) <= fRoot+err,
+      \x -> (fromJust $ newtonRaphson f fp (x :: Double) err) <= fRoot+err,
     SC.testProperty "e^x + x should converge from anywhere > root - err" $
-      \x -> (fromJust $ newton_raphson f fp (x :: Double) err) >= fRoot-err,
+      \x -> (fromJust $ newtonRaphson f fp (x :: Double) err) >= fRoot-err,
     SC.testProperty "x^2 +1 should never converge" $
-      \x -> newton_raphson (\y -> y^2 + 1) (\y -> 2 * y) (x :: Double) err == Nothing
+      \x -> newtonRaphson (\y -> y^2 + 1) (\y -> 2 * y) (x :: Double) err == Nothing
   ]
 
 -- secant_props = testGroup "Secant Method Propeties\nChecked bySmallCheck"
---   [ SC.testProperty "e6x+x should converge from any two values" $ 
+--   [ SC.testProperty "e6x+x should converge from any two values" $
 --       \x y -> secant f (x::Double) (y::Double) err <= fRoot+err,
---     SC.testProperty "e6x+x should converge from any two values" $ 
---       \x y -> secant f (x::Double) (y::Double) err >= fRoot-err 
+--     SC.testProperty "e6x+x should converge from any two values" $
+--       \x y -> secant f (x::Double) (y::Double) err >= fRoot-err
 
---   ] 
+--   ]

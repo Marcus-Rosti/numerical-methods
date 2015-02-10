@@ -13,18 +13,18 @@ odeSol :: Double -> Double
 odeSol t = (-t) + 4*e**(t-1) -1
 
 strip4y :: [(Double, Double)] -> [Double]
-strip4y = map (\(_,y) -> y)
+strip4y = map snd
 
 strip4t :: [(Double, Double)] -> [Double]
-strip4t = map (\(t,_) -> t)
+strip4t = map fst
 
-list_error :: [Double] -> [Double] -> [Double]
-list_error xs ys = map (\(x,y) -> x - y) (zip xs ys)
+listError :: [Double] -> [Double] -> [Double]
+listError = zipWith (-)
 
 inferH :: [Double] -> [Double]
 inferH [] = []
 inferH (f:s:xs) = (s-f) : inferH (s:xs)
-inferH (_:[]) = []
+
 
 main :: IO ()
 main = do
@@ -46,13 +46,13 @@ main = do
 	print $ strip4y (taylors (\t y -> t + y) 2 1 1.5 0.1)
 	print $ strip4y (rungeKuttaFehlberg (\t y -> t + y) 2 1 1.5 0.1 0.001)
 	let rkfSols = rungeKuttaFehlberg ode 2 1 1.5 (2**(-16)) (10**(-4))
-	print $ "RKF solutions"
-	print $ rkfSols
+	print "RKF solutions"
+	print rkfSols
 	let ts = strip4t rkfSols
 	print $ inferH ts
 	let sols = map odeSol ts
-	print $ "errors"
-	let errors = list_error sols (strip4y rkfSols)
-	print $ foldr1 (+) errors
+	print "errors"
+	let errors = listError sols (strip4y rkfSols)
+	print $ sum errors
 
 	--print $ rungeKuttaFehlberg (\t y -> t + y) 2 1 1.4 0.1 (10**(-3))

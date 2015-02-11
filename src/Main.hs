@@ -2,6 +2,7 @@
 --import Ch_03
 import           Ch_06
 import           Ch_07
+import					 Ch_09
 
 e :: Double
 e = exp 1
@@ -21,8 +22,10 @@ strip4t = map fst
 listError :: [Double] -> [Double] -> [Double]
 listError = zipWith (-)
 
+-- TODO there's something wrong here
 inferH :: [Double] -> [Double]
 inferH [] = []
+inferH (_:_:[]) = []
 inferH (f:s:xs) = (s-f) : inferH (s:xs)
 
 
@@ -38,14 +41,15 @@ main = do
 	let gq = adaptiveQuad gaussQuad f a_0 b_0 err
 	let simps = adaptiveQuad simpsons f a_0 b_0 err
 	let trap = adaptiveQuad trapazoid f a_0 b_0 err
+	print "ODE Examples"
 	print $ real - gaussQuad f a_0 b_0
 	print $ real - gq <= err*10
 	print $ real - simps <= err*10
 	print $ real - trap <= err*10
 	print $ strip4y (eulers (\t y -> t + y) 2 1 1.5 0.1)
 	print $ strip4y (taylors (\t y -> t + y) 2 1 1.5 0.1)
-	print $ strip4y (rungeKuttaFehlberg (\t y -> t + y) 2 1 1.5 0.1 0.001)
-	let rkfSols = rungeKuttaFehlberg ode 2 1 1.5 (2**(-16)) (10**(-4))
+	print $ strip4y (rungeKuttaFehlberg (\t y -> t + y) 2 1 1.5 0.1 0.1)
+	let rkfSols = rungeKuttaFehlberg ode 2 1 1.5 (2**(-1)) (10**(-2))
 	print "RKF solutions"
 	print rkfSols
 	let ts = strip4t rkfSols
@@ -55,4 +59,6 @@ main = do
 	let errors = listError sols (strip4y rkfSols)
 	print $ sum errors
 
-	--print $ rungeKuttaFehlberg (\t y -> t + y) 2 1 1.4 0.1 (10**(-3))
+	print $ rungeKuttaFehlberg (\t y -> t + y) 2 1 1.4 0.1 (10**(-2))
+	print "Optimization Examples"
+	print $ boundedMin (\x -> x*x + x) (-10) 10 (2**(-4))

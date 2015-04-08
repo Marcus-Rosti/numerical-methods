@@ -50,4 +50,4 @@ rungeKuttaFehlberg yprime y_0 t_0 t_n h tolerance
 			hnext
 				| q <= 0.1 = h/10
 				| q <= 4 && q > 0.1  = q*h
-				| q > 4 = 4*h
+				| otherwise = 4*h

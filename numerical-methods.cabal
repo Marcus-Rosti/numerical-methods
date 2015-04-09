@@ -54,11 +54,11 @@ library
 executable numerical-methods
   default-language: Haskell2010
   main-is:          Main.hs
-  other-modules:    Ch_02, Ch_03, Ch_06, Ch_07, Ch_09
   build-depends:    base >=4.6
                     , Cabal >= 1.18
                     , parallel
-  hs-source-dirs:   src src/ch_02 src/ch_03 src/ch_06 src/ch_07 src/ch_09
+                    , numerical-methods
+  hs-source-dirs:   src 
   ghc-options:
     -Wall
     -threaded

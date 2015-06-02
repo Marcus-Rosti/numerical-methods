@@ -21,8 +21,8 @@ ch_02Suite_Props = testGroup "CH 2 Properties" [newton_raphson_props]
 ch_02Suite_Units = testGroup "Ch 2 Units" [bisectionUnits]
 
 bisectionUnits = testGroup "Bisection Unit Tests"
-	[ testCase "Bisection arctan [-4.9,5.1] > err" $
-		  (fromJust $ bisection atan ((-4.9),5.1) err ) `compare` (-err) @?= GT,
+    [ testCase "Bisection arctan [-4.9,5.1] > err" $
+          (fromJust $ bisection atan ((-4.9),5.1) err ) `compare` (-err) @?= GT,
 
     testCase "Bisection arctan [-4.9,5.1] < err" $
       (fromJust $ bisection atan ((-4.9),5.1) err ) `compare` (err) @?= LT,
@@ -38,7 +38,7 @@ bisectionUnits = testGroup "Bisection Unit Tests"
 
     testCase "Bisection e^x + x [0,5.1] == Nothing" $
       bisection f (0,5.1) err @?= Nothing
-	]
+    ]
 
 
 

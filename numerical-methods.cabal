@@ -61,12 +61,12 @@ executable numerical-methods
                     , Cabal >= 1.18
                     , parallel
                     , numerical-methods
-  hs-source-dirs:   src 
+  hs-source-dirs:   src
   ghc-options:
     -Wall
     -threaded
     -rtsopts
-    -prof
-    -fprof-auto
-    -fno-prof-count-entries
+    --prof
+    --fprof-auto
+    --fno-prof-count-entries
     "-with-rtsopts=-sstderr -N"

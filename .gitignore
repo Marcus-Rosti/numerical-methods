@@ -18,7 +18,8 @@ cabal.config
 *.prof
 *.aux
 *.hp
-
+*.lks*
+.stack-work/
 
 ### OSX ###
 .DS_Store
